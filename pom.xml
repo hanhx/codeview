@@ -15,6 +15,7 @@
         <lombok.version>1.16.4</lombok.version>
         <jdk.version>1.8</jdk.version>
         <testng.version>6.9.10</testng.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <dependencies>
@@ -27,6 +28,22 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.0.12</version>
         </dependency>
     </dependencies>
 
