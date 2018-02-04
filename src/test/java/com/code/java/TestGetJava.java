@@ -1,5 +1,6 @@
 package com.code.java;
 
+import com.code.java.listener.JavaDiagnosticListener;
 import com.sun.source.tree.CompilationUnitTree;
 import com.sun.source.util.JavacTask;
 import com.sun.tools.javac.api.JavacTool;
@@ -39,19 +40,20 @@ public class TestGetJava {
         System.out.println("This is a java project !");
         File file = FileUtils.getFile(srcFile);
         List<File> filelists = FileUtils.getFiles(file, null, null).stream().filter(p -> p.getName().contains(".java")).collect(Collectors.toList());
-        filelists.stream().forEach(p -> System.out.println(p.getName()));
+        filelists.forEach(p -> System.out.println(p.getName()));
         JavacTool javacTool = JavacTool.create();
 
-        JavacFileManager fileManager = javacTool.getStandardFileManager(null, Locale.SIMPLIFIED_CHINESE, Charset.defaultCharset());
+        JavaDiagnosticListener javaDiagnosticListener = new JavaDiagnosticListener();
+        JavacFileManager fileManager = javacTool.getStandardFileManager(javaDiagnosticListener, Locale.SIMPLIFIED_CHINESE, Charset.defaultCharset());
 
-        Collection<? extends JavaFileObject> javaFiles = (Collection<? extends JavaFileObject>) fileManager
+        Iterable<? extends JavaFileObject> javaFiles = fileManager
                 .getJavaFileObjects(filelists.toArray(new File[filelists.size()]));
         JavaCompiler.CompilationTask compilationTask = javacTool.getTask(null, fileManager, null, null, null, javaFiles);
         JavacTask javacTask = (JavacTask) compilationTask;
         javacTask.setLocale(Locale.SIMPLIFIED_CHINESE);
 
-        List<CompilationUnitTree> trees = (List<CompilationUnitTree>) javacTask.parse();
-        trees.stream().forEach(unit -> {
+        Iterable<? extends CompilationUnitTree> trees = javacTask.parse();
+        trees.forEach(unit -> {
             System.out.println(unit.getPackageName() + "||" + unit.getSourceFile().getName());
         });
     }
