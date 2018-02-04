@@ -1,6 +1,7 @@
 package com.code.java;
 
 import com.code.java.listener.JavaDiagnosticListener;
+import com.google.common.collect.Lists;
 import com.sun.source.tree.CompilationUnitTree;
 import com.sun.source.util.JavacTask;
 import com.sun.tools.javac.api.JavacTool;
@@ -13,7 +14,7 @@ import javax.tools.JavaFileObject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -52,8 +53,11 @@ public class TestGetJava {
         javacTask.setLocale(Locale.SIMPLIFIED_CHINESE);
 
         Iterable<? extends CompilationUnitTree> trees = javacTask.parse();
-        trees.forEach(unit -> {
-            System.out.println(unit.getPackageName() + "||" + unit.getSourceFile().getName());
-        });
+
+        List<CompilationUnitTree> allTrees = new ArrayList<>();
+        allTrees.addAll(Lists.newArrayList(trees));
+        allTrees.forEach(unit ->
+                System.out.println(unit.getPackageName() + "||" + unit.getSourceFile().getName())
+        );
     }
 }
