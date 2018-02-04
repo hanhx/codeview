@@ -40,14 +40,14 @@ public class TestGetJava {
         }
         System.out.println("This is a java project !");
         File file = FileUtils.getFile(srcFile);
-        List<File> filelists = FileUtils.getFiles(file, null, null).stream().filter(p -> p.getName().contains(".java")).collect(Collectors.toList());
-        filelists.forEach(p -> System.out.println(p.getName()));
+        List<File> fileLists = FileUtils.getFiles(file, null, null).stream().filter(p -> p.getName().contains(".java")).collect(Collectors.toList());
+        fileLists.forEach(p -> System.out.println(p.getName()));
         JavacTool javacTool = JavacTool.create();
 
         JavaDiagnosticListener javaDiagnosticListener = new JavaDiagnosticListener();
         JavacFileManager fileManager = javacTool.getStandardFileManager(javaDiagnosticListener, Locale.SIMPLIFIED_CHINESE, Charset.defaultCharset());
 
-        Iterable<? extends JavaFileObject> javaFiles = fileManager.getJavaFileObjects(filelists.toArray(new File[filelists.size()]));
+        Iterable<? extends JavaFileObject> javaFiles = fileManager.getJavaFileObjects(fileLists.toArray(new File[fileLists.size()]));
         JavaCompiler.CompilationTask compilationTask = javacTool.getTask(null, fileManager, null, null, null, javaFiles);
         JavacTask javacTask = (JavacTask) compilationTask;
         javacTask.setLocale(Locale.SIMPLIFIED_CHINESE);
