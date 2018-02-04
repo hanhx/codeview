@@ -46,8 +46,7 @@ public class TestGetJava {
         JavaDiagnosticListener javaDiagnosticListener = new JavaDiagnosticListener();
         JavacFileManager fileManager = javacTool.getStandardFileManager(javaDiagnosticListener, Locale.SIMPLIFIED_CHINESE, Charset.defaultCharset());
 
-        Iterable<? extends JavaFileObject> javaFiles = fileManager
-                .getJavaFileObjects(filelists.toArray(new File[filelists.size()]));
+        Iterable<? extends JavaFileObject> javaFiles = fileManager.getJavaFileObjects(filelists.toArray(new File[filelists.size()]));
         JavaCompiler.CompilationTask compilationTask = javacTool.getTask(null, fileManager, null, null, null, javaFiles);
         JavacTask javacTask = (JavacTask) compilationTask;
         javacTask.setLocale(Locale.SIMPLIFIED_CHINESE);
